@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>About Us — PDF SUITE</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    :root{ --bg:#111827; --text:#e6eef8; --card:#1f2937; --accent:#3b82f6; --muted:#9ca3af; }
+    body{ margin:0; font-family:"Segoe UI",sans-serif; background:var(--bg); color:var(--text); line-height:1.6; }
+
+    nav{ position:fixed; top:0; width:100%; height:72px; display:flex; align-items:center; justify-content:space-between; padding:0 28px; background:rgba(17,24,39,0.95); border-bottom:1px solid #374151; }
+    .logo{ font-weight:700; font-size:1.2rem; color:white; text-decoration:none; }
+    .nav-links a{ color:var(--muted); text-decoration:none; margin-left:20px; }
+    .nav-links a:hover{ color:white; }
+
+    .container{ max-width:800px; margin:120px auto; padding:20px; }
+    h1{ font-size:2.5rem; color:#dbeafe; margin-bottom:10px; }
+    .card{ background:var(--card); padding:30px; border-radius:12px; border:1px solid #374151; margin-bottom:20px; }
+    h2{ color:#60a5fa; margin-top:0; }
+    p{ color:var(--muted); }
+
+    /* Developer Badge */
+    .dev-badge { display:inline-block; background:rgba(59,130,246,0.2); color:#60a5fa; padding:5px 15px; border-radius:50px; font-weight:bold; font-size:0.9rem; margin-top:10px;}
+
+    /* 📱 MOBILE FIX FOR ABOUT PAGE */
+    @media (max-width: 768px) {
+        nav { padding: 0 15px; }
+        .logo { font-size: 1rem; }
+        .nav-links a { margin-left: 10px; font-size: 0.85rem; }
+        .container { margin: 90px auto 40px auto; padding: 15px; }
+        h1 { font-size: 1.8rem; }
+        .card { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="/" class="logo">PDF SUITE</a>
+    <div class="nav-links">
+      <a href="/">Home</a>
+      <a href="/about" style="color:white">About</a>
+      <a href="/privacy">Privacy</a>
+    </div>
+  </nav>
+
+  <div class="container">
+    <h1>About PDF SUITE</h1>
+    <p>The most powerful, secure, and free online PDF toolkit.</p>
+
+    <div class="card">
+      <h2>🚀 Our Mission</h2>
+      <p>PDF Suite was created to provide a free, secure, and easy-to-use alternative to expensive PDF software. We believe that basic document management should be accessible to everyone, from students to professionals.</p>
+    </div>
+
+    <div class="card">
+      <h2>👨‍💻 The Developer</h2>
+      <p>This tool was designed and developed with passion by:</p>
+      <div class="dev-badge">✨ ABDULLAH KHAN</div>
+      <p style="margin-top:15px">Built using the latest web technologies including Python, Flask, and Docker to ensure speed and reliability.</p>
+    </div>
+
+    <div class="card">
+      <h2>⚡ Technology</h2>
+      <p>We use advanced OCR engines (Tesseract) and high-speed processing libraries to handle your documents securely on the server without saving them permanently.</p>
+    </div>
+  </div>
+
+</body>
+</html>

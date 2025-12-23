@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>PDF SUITE — The Ultimate All-in-One PDF Toolkit</title>
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <style>
+    :root{
+      --bg: #111827;           /* semi-dark background */
+      --card: #1f2937;         /* card background */
+      --card-hover: #374151;   /* hover card */
+      --muted: #9ca3af;        /* muted text */
+      --text: #e6eef8;         /* light text */
+      --accent-from: #3b82f6; /* button gradient start */
+      --accent-to: #2563eb;   /* button gradient end */
+      --glass: rgba(255,255,255,0.03);
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: "Segoe UI", Roboto, system-ui, -apple-system, "Helvetica Neue", Arial;
+      background: linear-gradient(180deg,var(--bg), #0b1220 100%);
+      color:var(--text);
+      line-height:1.4;
+    }/* Developer Badge Styling */
+    .dev-badge {
+        display: inline-block;
+        background: rgba(59, 130, 246, 0.15);
+        color: #60a5fa;
+        padding: 6px 16px;
+        border-radius: 50px;
+        font-size: 0.8rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        border: 1px solid rgba(59, 130, 246, 0.3);
+        margin-bottom: 15px;
+        box-shadow: 0 0 15px rgba(59, 130, 246, 0.2);
+        animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+        0% { transform: translateY(0px); }
+        50% { transform: translateY(-5px); }
+        100% { transform: translateY(0px); }
+    }
+
+    /* NAV */
+    nav{
+      position:fixed; top:0;left:0;right:0; height:72px; display:flex;
+      align-items:center; justify-content:space-between; padding:12px 28px;
+      background:linear-gradient(180deg, rgba(17,24,39,0.95), rgba(17,24,39,0.85));
+      border-bottom:1px solid rgba(255,255,255,0.03); z-index:1000;
+    }
+    .brand{ display:flex; gap:14px; align-items:center; }
+    .logo{
+      width:42px;height:42px; border-radius:10px; display:flex;
+      align-items:center; justify-content:center;
+      background: linear-gradient(135deg,var(--accent-from),var(--accent-to));
+      box-shadow:0 6px 18px rgba(37,99,235,0.12);
+      font-weight:700; font-size:18px; color:white;
+    }
+    .brand-title{ display:flex; flex-direction:column; line-height:1; }
+    .brand-title .title{font-weight:700; font-size:1.05rem; color:var(--text)}
+    .brand-title .tag{font-size:0.78rem; color:var(--muted)}
+
+    .nav-links{ display:flex; gap:18px; align-items:center; }
+    .nav-links a{
+      color:var(--muted); text-decoration:none; padding:8px 10px;
+      border-radius:8px; transition:all .18s ease; font-size:0.96rem;
+    }
+    .nav-links a:hover{ color:var(--text); background:rgba(255,255,255,0.02); }
+
+    /* Page container */
+    .wrap{ max-width:1200px; margin:100px auto 48px; padding:0 20px; }
+
+    header.hero{ text-align:center; margin-bottom:30px; }
+    header.hero h1{ font-size:2.4rem; margin-bottom:8px; color:#dbeafe; letter-spacing: -0.5px; }
+    header.hero p{ color:var(--muted); font-size:1rem; margin-bottom:20px; }
+
+    /* SEARCH BAR */
+    .search-container {
+        max-width: 600px;
+        margin: 0 auto 50px auto;
+        position: relative;
+    }
+    .search-box {
+        width: 100%;
+        padding: 15px 20px 15px 50px;
+        border-radius: 50px;
+        border: 1px solid rgba(255,255,255,0.1);
+        background: rgba(31, 41, 55, 0.8);
+        color: white;
+        font-size: 1rem;
+        outline: none;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+    .search-box:focus {
+        border-color: var(--accent-from);
+        background: #1f2937;
+        box-shadow: 0 4px 20px rgba(59, 130, 246, 0.3);
+    }
+    .search-icon {
+        position: absolute;
+        left: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--muted);
+    }
+
+    /* SECTIONS */
+    .section-title {
+        color: #93c5fd;
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin: 40px 0 20px 0;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+        padding-bottom: 10px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    
+    .tools-grid{
+      display:grid; gap:20px;
+      grid-template-columns: repeat(auto-fit, minmax(280px,1fr));
+      align-items:stretch;
+    }
+
+    /* CARD STYLING */
+    .tool-card{
+      background: linear-gradient(180deg,var(--card), rgba(255,255,255,0.01));
+      border-radius:14px; padding:22px;
+      border:1px solid rgba(255,255,255,0.03);
+      transition: transform .35s, box-shadow .35s, border-color .25s;
+      display:flex; flex-direction:column; gap:10px;
+      min-height:210px; justify-content:space-between;
+      position: relative;
+    }
+    .tool-card:hover{
+      transform: translateY(-5px);
+      background: var(--card-hover);
+      border-color: rgba(59,130,246,0.3);
+      box-shadow: 0 10px 30px rgba(2,6,23,0.5);
+    }
+
+    .tool-top{ display:flex; gap:12px; align-items:center; }
+    .tool-icon{
+      width:45px;height:45px;border-radius:10px;
+      display:flex;align-items:center;justify-content:center;
+      font-size:20px;
+      background: rgba(255,255,255,0.05); color:#93c5fd;
+      flex-shrink: 0;
+    }
+    .tool-card:hover .tool-icon{ color:white; background: linear-gradient(135deg,var(--accent-from),var(--accent-to)); }
+
+    .tool-title{ font-size:1.1rem; color: #e6f0ff; font-weight:700; margin-bottom: 3px; }
+    .tool-description{ color:var(--muted); font-size:0.85rem; line-height: 1.3; }
+
+    /* FORM STYLES */
+    .card-form { display: flex; flex-direction: column; gap: 10px; margin-top: auto; }
+    .mini-input, .file-input {
+        background: rgba(0,0,0,0.3);
+        border: 1px solid rgba(255,255,255,0.1);
+        color: #d1d5db; padding: 8px; border-radius: 6px;
+        font-size: 0.85rem; width: 100%;
+    }
+    .row { display: flex; gap: 5px; }
+
+    .btn{
+      background: linear-gradient(90deg,var(--accent-from),var(--accent-to));
+      color:white;border:none;padding:10px;border-radius:8px;
+      font-weight:600;cursor:pointer;font-size:0.9rem; width: 100%;
+      transition: opacity 0.2s;
+    }
+    .btn:hover{ opacity: 0.9; }
+
+    /* Footer */
+    footer{ margin-top:60px; padding:26px; text-align:center; color:var(--muted); border-top:1px solid rgba(255,255,255,0.02); }
+    footer a{ color:#93c5fd; text-decoration:none; }
+
+    /* Modal */
+    .modal{ display:none; position:fixed; inset:0; z-index:2000; background:rgba(0,0,0,0.85); align-items:center; justify-content:center; padding:20px; }
+    .modal.show{ display:flex; }
+    .modal-box{ width:100%; max-width:800px; background:#111827; padding:25px; border-radius:12px; border:1px solid #374151; box-shadow: 0 20px 50px black; }
+    .modal-header { display:flex; justify-content:space-between; margin-bottom:20px; align-items:center;}
+    .close-btn { background:none; border:none; color:white; font-size:1.5rem; cursor:pointer; }
+    .upload-area { border: 2px dashed #374151; padding: 30px; text-align: center; margin: 15px 0; cursor: pointer; color: #9ca3af; border-radius: 8px; }
+    .upload-area:hover { border-color: var(--accent-from); background: rgba(255,255,255,0.02); }
+    
+    /* Progress */
+    .progress{ height:6px; background: rgba(255,255,255,0.1); border-radius:8px; overflow:hidden; margin-top:15px; display:none;}
+    .progress-bar{ height:100%; width:0%; background: var(--accent-from); transition: width 0.3s; }
+    .messages { margin-top: 15px; }
+    .msg { padding: 10px; border-radius: 6px; font-size: 0.9rem; margin-top: 5px; }
+    .msg.success { background: rgba(16, 185, 129, 0.2); color: #6ee7b7; }
+    .msg.error { background: rgba(239, 68, 68, 0.2); color: #fca5a5; }
+
+    /* No results msg */
+    .no-results { text-align: center; color: var(--muted); margin-top: 40px; display: none; font-size: 1.1rem; }
+/* =========================================
+   📱 NEW PREMIUM MOBILE LAYOUT (2-Column App Grid)
+   ========================================= */
+@media (max-width: 768px) {
+    
+    /* 1. Header & Nav Adjustments */
+    nav { padding: 0 15px; height: 65px; }
+    .brand-title .tag { display: none; }
+    .logo { width: 35px; height: 35px; font-size: 1rem; }
+    .nav-links { gap: 10px; }
+    .nav-links a { 
+        font-size: 0.8rem; 
+        padding: 5px 10px; 
+        background: rgba(255,255,255,0.05); 
+        border-radius: 6px;
+    }
+
+    .wrap { margin-top: 85px; padding: 0 12px; }
+    header.hero h1 { font-size: 1.6rem; margin-bottom: 5px; }
+    header.hero p { font-size: 0.85rem; color: #9ca3af; margin-bottom: 20px; }
+    
+    /* Badge Adjustment */
+    .dev-badge { 
+        font-size: 0.65rem; 
+        padding: 4px 10px; 
+        margin-bottom: 10px; 
+    }
+
+    /* Search Bar */
+    .search-container { margin-bottom: 20px; }
+    .search-box { padding: 10px 15px 10px 40px; font-size: 0.9rem; }
+    .search-icon { left: 15px; font-size: 0.9rem; }
+
+    /* 2. THE GRID TRANSFORM (2 Columns) */
+    .tools-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+
+    /* 3. Card Styling for Mobile */
+    .tool-card {
+        min-height: 180px;
+        padding: 12px;
+        align-items: center;
+        text-align: center;
+    }
+
+    .tool-top { 
+        flex-direction: column; 
+        gap: 8px; 
+        margin-bottom: 8px; 
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .tool-icon {
+        width: 45px; 
+        height: 45px; 
+        font-size: 18px; 
+        background: rgba(59, 130, 246, 0.1);
+        margin: 0 auto;
+    }
+
+    .tool-title { 
+        font-size: 0.85rem; 
+        margin-bottom: 0; 
+        height: 35px; 
+        display: flex; 
+        align-items: center; 
+        justify-content: center; 
+    }
+    
+    /* HIDE Description on Mobile */
+    .tool-description { display: none; }
+
+    /* Compact Forms */
+    .card-form { width: 100%; gap: 6px; }
+    
+    .file-input {
+        font-size: 0.7rem;
+        padding: 5px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+    
+    .row { 
+        flex-direction: column; 
+        gap: 5px; 
+    }
+    
+    .btn {
+        padding: 8px;
+        font-size: 0.8rem;
+    }
+    
+    /* Section Titles */
+    .section-title { font-size: 1rem; margin: 30px 0 15px 0; }
+}
+
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="brand">
+      <div class="logo">PS</div>
+      <div class="brand-title">
+        <div class="title">PDF SUITE</div>
+        <div class="tag">The Ultimate Tool</div>
+      </div>
+    </div>
+  <div class="nav-links">
+  <a href="/">Home</a>
+  <a href="/services">Services</a>
+  <a href="/about">About</a>
+  <a href="/privacy">Privacy</a>
+</div>
+
+  </nav>
+
+  <main class="wrap">
+    <header class="hero">
+  <div class="dev-badge">
+    ✨ Developed by ABDULLAH KHAN
+  </div>
+  <h1>All-in-One PDF Suite</h1>
+  <p>Merge, Split, Convert, Edit, OCR & More — 100% Secure.</p>
+</header>
+
+    <!-- SEARCH BAR -->
+    <div class="search-container">
+        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+        <input type="text" id="toolSearch" class="search-box" placeholder="Search for tools (e.g., 'Word', 'Merge', 'OCR')...">
+    </div>
+
+    <div id="noResults" class="no-results">
+        <i class="fa-regular fa-face-frown"></i> No tools found matching your search.
+    </div>
+
+    <!-- 1. CORE TOOLS SECTION -->
+    <div class="tool-section">
+        <div class="section-title"><i class="fa-solid fa-layer-group"></i> Core PDF Tools</div>
+        <div class="tools-grid">
+            
+            <article class="tool-card" onclick="openModal('merge')">
+                <div class="tool-top">
+                    <div class="tool-icon"><i class="fa-solid fa-file-merge"></i></div>
+                    <div><div class="tool-title">Merge PDFs</div><div class="tool-description">Combine multiple files into one.</div></div>
+                </div>
+                <div class="card-form"><button class="btn">Merge Now</button></div>
+            </article>
+
+            <article class="tool-card" onclick="openModal('split')">
+                <div class="tool-top">
+                    <div class="tool-icon"><i class="fa-solid fa-scissors"></i></div>
+                    <div><div class="tool-title">Split PDF</div><div class="tool-description">Extract pages or split document.</div></div>
+                </div>
+                <div class="card-form"><button class="btn">Split Now</button></div>
+            </article>
+
+            <article class="tool-card" onclick="openModal('compress')">
+                <div class="tool-top">
+                    <div class="tool-icon"><i class="fa-solid fa-compress"></i></div>
+                    <div><div class="tool-title">Compress</div><div class="tool-description">Reduce file size significantly.</div></div>
+                </div>
+                <div class="card-form"><button class="btn">Compress</button></div>
+            </article>
+
+            <article class="tool-card">
+                <div class="tool-top">
+                    <div class="tool-icon"><i class="fa-solid fa-arrow-down-1-9"></i></div>
+                    <div><div class="tool-title">Reorder</div><div class="tool-description">Sort pages (e.g. 2,1,3).</div></div>
+                </div>
+                <form action="/reorder-pdf" method="post" enctype="multipart/form-data" class="card-form">
+                    <input type="file" name="file" accept=".pdf" class="file-input" required>
+                    <input type="text" name="order" placeholder="Order (e.g. 2,1,3)" class="mini-input" required>
+                    <button type="submit" class="btn">Reorder</button>
+                </form>
+            </article>
+
+            <article class="tool-card">
+                <div class="tool-top">
+                    <div class="tool-icon"><i class="fa-solid fa-rotate"></i></div>
+                    <div><div class="tool-title">Rotate PDF</div><div class="tool-description">Rotate pages 90 or 180 degrees.</div></div>
+                </div>
+                <form action="/rotate-pdf" method="post" enctype="multipart/form-data" class="card-form">
+                    <input type="file" name="file" accept=".pdf" class="file-input" required>
+                    <select name="rotation" class="mini-input"><option value="90">90° CW</option><option value="180">180°</option><option value="270">90° CCW</option></select>
+                    <button type="submit" class="btn">Rotate</button>
+                </form>
+            </article>
+
+            <article class="tool-card">
+                <div class="tool-top">
+                    <div class="tool-icon"><i class="fa-solid fa-crop-simple"></i></div>
+                    <div><div class="tool-title">Crop PDF</div><div class="tool-description">Trim page margins manually.</div></div>
+                </div>
+                <form action="/crop-pdf" method="post" enctype="multipart/form-data" class="card-form">
+                    <input type="file" name="file" accept=".pdf" class="file-input" required>
+                    <div class="row"><input type="number" name="top" placeholder="Top" class="mini-input"><input type="number" name="bottom" placeholder="Btm" class="mini-input"></div>
+                    <button type="submit" class="btn">Crop</button>
+                </form>
+            </article>
+
+            <article class="tool-card" onclick="openModal('remove')">
+                <div class="tool-top">
+                    <div class="tool-icon"><i class="fa-solid fa-eraser"></i></div>
+                    <div><div class="tool-title">Remove Pages</div><div class="tool-description">Delete unwanted pages.</div></div>
+                </div>
+                <div class="card-form"><button class="btn">Remove</button></div>
+            </article>
+
+            <article class="tool-card">
+                <div class="tool-top">
+                    <div class="tool-icon"><i class="fa-solid fa-box-open"></i></div>
+                    <div><div class="tool-title">Extract All</div><div class="tool-description">Get Images & Text as Zip.</div></div>
+                </div>
+                <form action="/extract-all-content" method="post" enctype="multipart/form-data" class="card-form">
+                    <input type="file" name="file" accept=".pdf" class="file-input" required>
+                    <button type="submit" class="btn">Extract Zip</button>
+                </form>
+            </article>
+        </div>
+    </div>
+
+    <!-- 2. CONVERT FROM PDF SECTION -->
+    <div class="tool-section">
+        <div class="section-title"><i class="fa-solid fa-file-export"></i> Convert from PDF</div>
+        <div class="tools-grid">
+            <article class="tool-card">
+                <div class="tool-top">
+                    <div class="tool-icon"><i class="fa-solid fa-file-word"></i></div>
+                    <div><div class="tool-title">PDF to Word</div><div class="tool-description">Convert to Editable Docx.</div></div>
+                </div>
+                <form action="/pdf-to-word" method="post" enctype="multipart/form-data" class="card-form">
+                    <input type="file" name="file" accept=".pdf" class="file-input" required>
+                    <button type="submit" class="btn">Convert</button>
+                </form>
+            </article>
+
+            <article class="tool-card">
+                <div class="tool-top">
+                    <div class="tool-icon"><i class="fa-solid fa-file-excel"></i></div>
+                    <div><div class="tool-title">PDF to Excel</div><div class="tool-description">Extract tables to XLSX.</div></div>
+                </div>
+                <form action="/pdf-to-excel" method="post" enctype="multipart/form-data" class="card-form">
+                    <input type="file" name="file" accept=".pdf" class="file-input" required>
+                    <button type="submit" class="btn">Convert</button>
+                </form>
+            </article>
+
+            <article class="tool-card">
+                <div class="tool-top">
+                    <div class="tool-icon"><i class="fa-solid fa-file-csv"></i></div>
+                    <div><div class="tool-title">PDF to CSV</div><div class="tool-description">Convert tables to CSV.</div></div>
+                </div>
+                <form action="/pdf-to-csv" method="post" enctype="multipart/form-data" class="card-form">
+                    <input type="file" name="file" accept=".pdf" class="file-input" required>
+                    <button type="submit" class="btn">Convert</button>
+                </form>
+            </article>
+
+            <article class="tool-card">
+                <div class="tool-top">
+                    <div class="tool-icon"><i class="fa-solid fa-table"></i></div>
+                    <div><div class="tool-title">Extract Tables</div><div class="tool-description">Auto-detect & extract grids.</div></div>
+                </div>
+                <form action="/extract-tables" method="post" enctype="multipart/form-data" class="card-form">
+                    <input type="file" name="file" accept=".pdf" class="file-input" required>
+                    <button type="submit" class="btn">Extract</button>
+                </form>
+            </article>
+
+            <article class="tool-card">
+                <div class="tool-top">
+                    <div class="tool-icon"><i class="fa-regular fa-image"></i></div>
+                    <div><div class="tool-title">PDF to Images</div><div class="tool-description">Save pages as PNGs.</div></div>
+                </div>
+                <form action="/pdf-to-all-images" method="post" enctype="multipart/form-data" class="card-form">
+                    <input type="file" name="file" accept=".pdf" class="file-input" required>
+                    <button type="submit" class="btn">Convert</button>
+                </form>
+            </article>
+
+            <article class="tool-card">
+                <div class="tool-top">
+                    <div class="tool-icon"><i class="fa-solid fa-align-left"></i></div>
+                    <div><div class="tool-title">PDF to Text</div><div class="tool-description">Extract raw text content.</div></div>
+                </div>
+                <form action="/pdf-to-text" method="post" enctype="multipart/form-data" class="card-form">
+                    <input type="file" name="file" accept=".pdf" class="file-input" required>
+                    <button type="submit" class="btn">Get Text</button>
+                </form>
+            </article>
+        </div>
+    </div>
+
+    <!-- 3. CONVERT TO PDF SECTION -->
+    <div class="tool-section">
+        <div class="section-title"><i class="fa-solid fa-file-import"></i> Convert to PDF</div>
+        <div class="tools-grid">
+            <article class="tool-card">
+                <div class="tool-top">
+                    <div class="tool-icon"><i class="fa-solid fa-file-word" style="color:#60a5fa"></i></div>
+                    <div><div class="tool-title">Word to PDF</div><div class="tool-description">Convert .docx to PDF.</div></div>
+                </div>
+                <form action="/word-to-pdf" method="post" enctype="multipart/form-data" class="card-form">
+                    <input type="file" name="file" accept=".docx" class="file-input" required>
+                    <button type="submit" class="btn">Convert</button>
+                </form>
+            </article>
+
+            <article class="tool-card">
+                <div class="tool-top">
+                    <div class="tool-icon"><i class="fa-solid fa-file-excel" style="color:#34d399"></i></div>
+                    <div><div class="tool-title">Excel to PDF</div><div class="tool-description">Convert .xlsx to PDF.</div></div>
+                </div>
+                <form action="/excel-to-pdf" method="post" enctype="multipart/form-data" class="card-form">
+                    <input type="file" name="file" accept=".xlsx" class="file-input" required>
+                    <button type="submit" class="btn">Convert</button>
+                </form>
+            </article>
+
+            <article class="tool-card">
+                <div class="tool-top">
+                    <div class="tool-icon"><i class="fa-solid fa-images"></i></div>
+                    <div><div class="tool-title">Images to PDF</div><div class="tool-description">Join JPG/PNG to PDF.</div></div>
+                </div>
+                <form action="/images-to-pdf" method="post" enctype="multipart/form-data" class="card-form">
+                    <input type="file" name="files" accept="image/*" multiple class="file-input" required>
+                    <button type="submit" class="btn">Combine</button>
+                </form>
+            </article>
+        </div>
+    </div>
+
+    <!-- 4. SECURITY & EDIT SECTION -->
+    <div class="tool-section">
+        <div class="section-title"><i class="fa-solid fa-shield-halved"></i> Security & Edit</div>
+        <div class="tools-grid">
+            <article class="tool-card" onclick="openModal('edit')">
+                <div class="tool-top">
+                    <div class="tool-icon"><i class="fa-solid fa-pen-to-square"></i></div>
+                    <div><div class="tool-title">Edit PDF Text</div><div class="tool-description">Visual Editor (Whiteout/Type).</div></div>
+                </div>
+                <div class="card-form"><button class="btn">Open Editor</button></div>
+            </article>
+
+            <article class="tool-card">
+                <div class="tool-top">
+                    <div class="tool-icon"><i class="fa-solid fa-eye"></i></div>
+                    <div><div class="tool-title">OCR PDF</div><div class="tool-description">Scanned PDF to searchable text.</div></div>
+                </div>
+                <form action="/ocr-pdf" method="post" enctype="multipart/form-data" class="card-form">
+                    <input type="file" name="file" accept=".pdf" class="file-input" required>
+                    <button type="submit" class="btn">Start OCR</button>
+                </form>
+            </article>
+
+            <article class="tool-card">
+                <div class="tool-top">
+                    <div class="tool-icon"><i class="fa-solid fa-signature"></i></div>
+                    <div><div class="tool-title">Add Signature</div><div class="tool-description">Stamp PNG signature.</div></div>
+                </div>
+                <form action="/add-signature" method="post" enctype="multipart/form-data" class="card-form">
+                    <input type="file" name="pdf_file" accept=".pdf" class="file-input" required title="PDF">
+                    <input type="file" name="signature_file" accept="image/*" class="file-input" required title="Sig">
+                    <button type="submit" class="btn">Sign</button>
+                </form>
+            </article>
+
+            <article class="tool-card">
+                <div class="tool-top">
+                    <div class="tool-icon"><i class="fa-solid fa-tags"></i></div>
+                    <div><div class="tool-title">Metadata</div><div class="tool-description">Edit Title & Author.</div></div>
+                </div>
+                <form action="/edit-metadata" method="post" enctype="multipart/form-data" class="card-form">
+                    <input type="file" name="file" accept=".pdf" class="file-input" required>
+                    <input type="text" name="title" placeholder="New Title" class="mini-input">
+                    <button type="submit" class="btn">Update</button>
+                </form>
+            </article>
+
+            <article class="tool-card" onclick="openModal('protect')">
+                <div class="tool-top">
+                    <div class="tool-icon"><i class="fa-solid fa-lock"></i></div>
+                    <div><div class="tool-title">Protect</div><div class="tool-description">Add Password.</div></div>
+                </div>
+                <div class="card-form"><button class="btn">Protect</button></div>
+            </article>
+
+            <article class="tool-card" onclick="openModal('unlock')">
+                <div class="tool-top">
+                    <div class="tool-icon"><i class="fa-solid fa-lock-open"></i></div>
+                    <div><div class="tool-title">Unlock</div><div class="tool-description">Remove Password.</div></div>
+                </div>
+                <div class="card-form"><button class="btn">Unlock</button></div>
+            </article>
+
+            <article class="tool-card" onclick="openModal('watermark')">
+                <div class="tool-top">
+                    <div class="tool-icon"><i class="fa-solid fa-droplet"></i></div>
+                    <div><div class="tool-title">Watermark</div><div class="tool-description">Add text stamp.</div></div>
+                </div>
+                <div class="card-form"><button class="btn">Add Watermark</button></div>
+            </article>
+        </div>
+    </div>
+
+    <footer>
+      © 2025 PDF SUITE — All rights reserved.
+    </footer>
+  </main>
+
+  <!-- MODAL FOR COMPLEX TOOLS -->
+  <div id="modal" class="modal" onclick="if(event.target===modal) closeModal()">
+    <div class="modal-box">
+      <div class="modal-header">
+        <div>
+          <h2 id="modalTitle" style="margin:0;color:white;">Tool</h2>
+          <div style="color:var(--muted); font-size:0.9rem" id="modalSubtitle">Process your files</div>
+        </div>
+        <button class="close-btn" onclick="closeModal()">&times;</button>
+      </div>
+      <div id="modalBody">
+        <div id="uploadArea" class="upload-area">Click here or drop PDF file(s)</div>
+        <input id="fileInput" type="file" accept=".pdf" style="display:none" />
+        <input id="multiFileInput" type="file" accept=".pdf" multiple style="display:none" />
+        <div class="file-list" id="fileList"></div>
+        <div class="extra-fields" id="extraFields"></div>
+        <div class="progress" id="progress"><div class="progress-bar" id="progressBar"></div></div>
+        <div class="messages" id="messages"></div>
+        <div style="margin-top:20px; display:flex; justify-content:flex-end;">
+          <button class="btn" id="processBtn" onclick="processFile()" style="width:auto; padding:10px 30px;">Process</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // --- SEARCH FUNCTIONALITY ---
+    const searchInput = document.getElementById('toolSearch');
+    const sections = document.querySelectorAll('.tool-section');
+    const noResults = document.getElementById('noResults');
+
+    searchInput.addEventListener('input', function(e) {
+        const term = e.target.value.toLowerCase().trim();
+        let totalVisible = 0;
+
+        sections.forEach(section => {
+            const cards = section.querySelectorAll('.tool-card');
+            let sectionVisibleCount = 0;
+
+            cards.forEach(card => {
+                const title = card.querySelector('.tool-title').textContent.toLowerCase();
+                const desc = card.querySelector('.tool-description').textContent.toLowerCase();
+                
+                if(title.includes(term) || desc.includes(term)){
+                    card.style.display = 'flex';
+                    sectionVisibleCount++;
+                    totalVisible++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            // Hide section title if all its cards are hidden
+            if(sectionVisibleCount === 0) {
+                section.style.display = 'none';
+            } else {
+                section.style.display = 'block';
+            }
+        });
+
+        if(totalVisible === 0){
+            noResults.style.display = 'block';
+        } else {
+            noResults.style.display = 'none';
+        }
+    });
+
+    // --- MODAL & EDITOR LOGIC ---
+    const modal = document.getElementById('modal');
+    const modalTitle = document.getElementById('modalTitle');
+    const uploadArea = document.getElementById('uploadArea');
+    const fileInput = document.getElementById('fileInput');
+    const multiFileInput = document.getElementById('multiFileInput');
+    const fileListEl = document.getElementById('fileList');
+    const extraFields = document.getElementById('extraFields');
+    const progress = document.getElementById('progress');
+    const progressBar = document.getElementById('progressBar');
+    const messages = document.getElementById('messages');
+    
+    let currentTool = '';
+    let selectedFiles = [];
+    let editedTexts = [];
+    let pdfData = null;
+
+    const toolConfig = {
+      merge: { title: 'Merge PDFs', multiple: true, endpoint: '/merge', fieldName: 'files' },
+      split: { title: 'Split PDF', multiple: false, endpoint: '/split', fieldName: 'file', fields: 'pages' },
+      compress: { title: 'Compress PDF', multiple: false, endpoint: '/compress', fieldName: 'file' },
+      watermark: { title: 'Add Watermark', multiple: false, endpoint: '/watermark', fieldName: 'file', fields: 'text' },
+      remove: { title: 'Remove Pages', multiple: false, endpoint: '/remove-pages', fieldName: 'file', fields: 'pages' },
+      protect: { title: 'Protect PDF', multiple: false, endpoint: '/protect', fieldName: 'file', fields: 'password' },
+      unlock: { title: 'Unlock PDF', multiple: false, endpoint: '/unlock', fieldName: 'file', fields: 'password' },
+      edit: { title: 'Edit PDF Text', multiple: false, endpointGet: '/get-pdf-text', endpointPost: '/edit-pdf', fieldName: 'file', custom: true }
+    };
+
+    function showModal(){ modal.classList.add('show'); }
+    function closeModal(){
+      modal.classList.remove('show');
+      selectedFiles = []; editedTexts = []; pdfData = null;
+      fileListEl.innerHTML = ''; extraFields.innerHTML = ''; messages.innerHTML = '';
+      progress.style.display = 'none';
+      if(document.getElementById('editorArea')) location.reload();
+    }
+
+    function showMessage(type, text){ messages.innerHTML = `<div class="msg ${type}">${text}</div>`; }
+    function setProgress(percent){ progress.style.display = 'block'; progressBar.style.width = percent + '%'; }
+
+    function openModal(tool){
+      currentTool = tool;
+      const cfg = toolConfig[tool];
+      if(!cfg) return;
+      modalTitle.textContent = cfg.title;
+      fileListEl.innerHTML = ''; extraFields.innerHTML = ''; messages.innerHTML = '';
+      
+      if(cfg.fields === 'pages') extraFields.innerHTML = `<input id="pagesInput" placeholder="Pages: 1-3,5" class="mini-input" style="color:white; margin-top:10px;">`;
+      if(cfg.fields === 'text') extraFields.innerHTML = `<input id="textInput" placeholder="Watermark Text" class="mini-input" style="color:white; margin-top:10px;">`;
+      if(cfg.fields === 'password') extraFields.innerHTML = `<input id="passwordInput" type="password" placeholder="Password" class="mini-input" style="color:white; margin-top:10px;">`;
+
+      uploadArea.onclick = () => cfg.multiple ? multiFileInput.click() : fileInput.click();
+      showModal();
+    }
+
+    fileInput.onchange = (e) => handleSelect(e.target.files);
+    multiFileInput.onchange = (e) => handleSelect(e.target.files);
+
+    function handleSelect(files){
+      if(!files.length) return;
+      selectedFiles = Array.from(files);
+      fileListEl.innerHTML = selectedFiles.map(f => `<div style="color:#d1d5db; margin-top:5px;"><i class="fa-regular fa-file-pdf"></i> ${f.name}</div>`).join('');
+      if(currentTool === 'edit') loadPDFForEdit();
+    }
+
+    // --- VISUAL EDITOR ---
+    async function loadPDFForEdit(){
+      messages.innerHTML = ''; setProgress(20);
+      const fd = new FormData(); fd.append('file', selectedFiles[0]);
+      try{
+        const res = await fetch('/get-pdf-text', { method:'POST', body:fd });
+        const data = await res.json();
+        if(data.error) throw new Error(data.error);
+        pdfData = data;
+        showEditorUI();
+        setProgress(100);
+      }catch(e){ showMessage('error', e.message); }
+    }
+
+    function showEditorUI(){
+      const body = document.getElementById('modalBody');
+      body.innerHTML = `
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+           <button class="btn" onclick="changePage(-1)" style="width:auto">Prev</button>
+           <span id="pageInfo" style="color:white">Page 1</span>
+           <button class="btn" onclick="changePage(1)" style="width:auto">Next</button>
+           <button class="btn" onclick="saveEditedPDF()" style="width:auto; background:green;">Save PDF</button>
+        </div>
+        <div id="editorArea" style="overflow:auto; max-height:60vh; background:#0f1724; border-radius:8px; padding:10px;">
+           <canvas id="pdfCanvas" style="display:block; margin:0 auto;"></canvas>
+        </div>
+      `;
+      currentPage = 0;
+      renderPage();
+    }
+
+    let currentPage = 0;
+    function renderPage(){
+       if(!pdfData) return;
+       const page = pdfData.pages[currentPage];
+       const canvas = document.getElementById('pdfCanvas');
+       const ctx = canvas.getContext('2d');
+       const containerWidth = document.querySelector('.modal-box').clientWidth - 60;
+       const scale = containerWidth / page.width;
+       canvas.width = page.width * scale; canvas.height = page.height * scale;
+       ctx.fillStyle = 'white'; ctx.fillRect(0,0, canvas.width, canvas.height);
+       
+       page.text_blocks.forEach(block => {
+          const x = block.x * scale; const y = block.y * scale; const size = block.size * scale;
+          const edit = editedTexts.find(e => e.page === currentPage && e.x === block.x && e.y === block.y);
+          ctx.font = `${size}px sans-serif`; ctx.fillStyle = edit ? 'blue' : 'black';
+          ctx.fillText(edit ? edit.new_text : block.text, x, y + size);
+       });
+       
+       canvas.onclick = (e) => {
+          const rect = canvas.getBoundingClientRect();
+          const mx = e.clientX - rect.left; const my = e.clientY - rect.top;
+          for(let block of page.text_blocks){
+             const x = block.x * scale; const y = block.y * scale; const w = block.width * scale; const h = block.height * scale;
+             if(mx >= x && mx <= x+w && my >= y && my <= y+h){
+                const newText = prompt("Edit Text:", block.text);
+                if(newText !== null){
+                   editedTexts.push({ page: currentPage, x: block.x, y: block.y, width: block.width, height: block.height, size: block.size, color: block.color, new_text: newText });
+                   renderPage();
+                }
+                break;
+             }
+          }
+       };
+       document.getElementById('pageInfo').innerText = `Page ${currentPage+1} of ${pdfData.total_pages}`;
+    }
+
+    function changePage(dir){
+       if(currentPage + dir >= 0 && currentPage + dir < pdfData.total_pages){ currentPage += dir; renderPage(); }
+    }
+
+    async function saveEditedPDF(){
+       const res = await fetch('/edit-pdf', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({ edits: editedTexts }) });
+       if(res.ok){
+          const blob = await res.blob();
+          const url = window.URL.createObjectURL(blob);
+          const a = document.createElement('a'); a.href = url; a.download = 'edited.pdf'; a.click();
+       } else alert('Error saving PDF');
+    }
+
+    // --- STANDARD PROCESSING ---
+    async function processFile(){
+       const cfg = toolConfig[currentTool];
+       if(!selectedFiles.length) return;
+       const fd = new FormData();
+       if(cfg.multiple) selectedFiles.forEach(f => fd.append('files', f)); else fd.append('file', selectedFiles[0]);
+       if(document.getElementById('pagesInput')) fd.append('pages', document.getElementById('pagesInput').value);
+       if(document.getElementById('textInput')) fd.append('text', document.getElementById('textInput').value);
+       if(document.getElementById('passwordInput')) fd.append('password', document.getElementById('passwordInput').value);
+
+       setProgress(30);
+       try{
+         const res = await fetch(cfg.endpoint, { method:'POST', body:fd });
+         if(res.ok){
+            setProgress(100);
+            const blob = await res.blob();
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a'); a.href = url; a.download = 'result.pdf'; a.click();
+            showMessage('success', 'Done! Downloading...');
+         } else {
+            const err = await res.json(); showMessage('error', err.error);
+         }
+       }catch(e){ showMessage('error', e.message); }
+    }
+  </script>
+</body>
+</html>

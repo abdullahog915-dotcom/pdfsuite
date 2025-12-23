@@ -1,0 +1,29 @@
+============================================================
+             SOFTWARE LICENSE AGREEMENT
+============================================================
+
+Product: Ultimate PDF Suite (Python Flask Script)
+Copyright (c) 2025 Abdullah Khan. All Rights Reserved.
+
+By purchasing and downloading this software, you agree to the following terms:
+
+1. GRANT OF LICENSE
+   - You are granted a non-exclusive, non-transferable license to use this source code.
+   - You MAY install this script on your local computer or a web server.
+   - You MAY use this script for personal projects or commercial websites (e.g., a PDF tool website that generates ad revenue).
+   - You MAY modify the source code to fit your branding or specific needs.
+
+2. RESTRICTIONS (WHAT YOU CANNOT DO)
+   - You MAY NOT resell, redistribute, or share the source code (app.py, templates, etc.) with others.
+   - You MAY NOT bundle this script with other products and sell it.
+   - You MAY NOT claim this source code as your own intellectual property.
+
+3. OWNERSHIP
+   - The copyright and original authorship of this software belong to Abdullah Khan.
+   - This license gives you the right to use the software, not ownership of the code itself.
+
+4. DISCLAIMER OF WARRANTY
+   - This software is provided "AS IS", without warranty of any kind.
+   - The author (Abdullah Khan) is not liable for any damages or data loss arising from the use of this software.
+
+============================================================

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Privacy Policy — PDF SUITE</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    /* 1. FIX THE MENU CUT-OFF */
+    * { box-sizing: border-box; }
+
+    :root{ --bg:#111827; --text:#e6eef8; --card:#1f2937; --accent:#3b82f6; --muted:#9ca3af; }
+    
+    body{ 
+        margin:0; 
+        font-family:"Segoe UI",sans-serif; 
+        background:var(--bg); 
+        color:var(--text); 
+        line-height:1.6; 
+        overflow-x: hidden;
+    }
+    
+    nav{ 
+        position:fixed; 
+        top:0; 
+        left: 0;
+        width:100%; 
+        height:72px; 
+        display:flex; 
+        align-items:center; 
+        justify-content:space-between; 
+        padding:0 28px; 
+        background:rgba(17,24,39,0.95); 
+        border-bottom:1px solid #374151; 
+        z-index: 1000; 
+    }
+
+    .logo{ font-weight:700; font-size:1.2rem; color:white; text-decoration:none; }
+    .nav-links a{ color:var(--muted); text-decoration:none; margin-left:20px; }
+    .nav-links a:hover{ color:white; }
+
+    .container{ max-width:800px; margin:120px auto; padding:20px; text-align: center; }
+    
+    h1{ font-size:2.5rem; color:#dbeafe; margin-bottom:10px; margin-top: 10px; }
+    
+    .content{ text-align: left; background:var(--card); padding:40px; border-radius:12px; border:1px solid #374151; margin-top: 30px; }
+    h3{ color:#93c5fd; margin-top:25px; border-bottom:1px solid #374151; padding-bottom:10px; }
+    p, li{ color:var(--muted); font-size:0.95rem; }
+    ul{ padding-left:20px; }
+
+    /* 2. DEVELOPER BADGE STYLING */
+    .dev-badge {
+        display: inline-block;
+        background: rgba(59, 130, 246, 0.15);
+        color: #60a5fa;
+        padding: 6px 16px;
+        border-radius: 50px;
+        font-size: 0.8rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        border: 1px solid rgba(59, 130, 246, 0.3);
+        box-shadow: 0 0 15px rgba(59, 130, 246, 0.2);
+        animation: float 3s ease-in-out infinite;
+        margin-bottom: 10px;
+    }
+
+    @keyframes float {
+        0% { transform: translateY(0px); }
+        50% { transform: translateY(-5px); }
+        100% { transform: translateY(0px); }
+    }
+
+    /* 3. MOBILE LAYOUT FIX */
+    @media (max-width: 768px) {
+        nav { padding: 0 15px; }
+        .logo { font-size: 1rem; }
+        .nav-links a { margin-left: 10px; font-size: 0.85rem; }
+        .container { margin: 90px auto 40px auto; padding: 15px; }
+        h1 { font-size: 1.8rem; }
+        .content { padding: 20px; }
+        .dev-badge { font-size: 0.65rem; padding: 4px 10px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="/" class="logo">PDF SUITE</a>
+    <div class="nav-links">
+      <a href="/">Home</a>
+      <a href="/about">About</a>
+      <a href="/privacy" style="color:white">Privacy</a>
+    </div>
+  </nav>
+
+  <div class="container">
+    
+    <div class="dev-badge">
+      ✨ Developed by ABDULLAH KHAN
+    </div>
+
+    <h1>Privacy Policy</h1>
+    <p>Last Updated: December 2025</p>
+
+    <div class="content">
+      <p>At PDF SUITE, we take your privacy seriously. We do not sell, trade, or rent your personal information to others.</p>
+
+      <h3>1. File Security</h3>
+      <p>We understand that your documents are important. Here is how we handle them:</p>
+      <ul>
+        <li><strong>Automatic Deletion:</strong> All files uploaded to our servers are processed immediately and are automatically deleted after 1 hour or after the download is complete.</li>
+        <li><strong>No Permanent Storage:</strong> We do not store your files on our database or permanent storage.</li>
+        <li><strong>Encryption:</strong> All data transfer is secured using SSL/TLS encryption.</li>
+      </ul>
+
+      <h3>2. Data Collection</h3>
+      <p>We do not collect any personal data (like names, emails, or phone numbers) unless you explicitly provide it (e.g., contacting support).</p>
+
+      <h3>3. Cookies</h3>
+      <p>We use essential cookies only to ensure the website functions correctly. We do not use tracking cookies for advertising.</p>
+
+      <h3>4. Contact Us</h3>
+      <p>If you have any questions about this Privacy Policy, please contact the developer: <strong>Abdullah Khan</strong>.</p>
+    </div>
+  </div>
+
+</body>
+</html>

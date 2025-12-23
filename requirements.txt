@@ -1,0 +1,14 @@
+flask
+werkzeug
+PyPDF2
+reportlab
+img2pdf
+pymupdf
+pdfplumber
+pandas
+pdf2docx
+pytesseract
+pdf2image
+openpyxl
+pillow
+docx2pdf
